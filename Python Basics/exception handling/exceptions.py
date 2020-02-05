@@ -34,3 +34,4 @@ try:
     sum_of_iterable([1, 3, "a"])
 except TypeError as error:
     print(error)
+    raise Exception("re raise exception")
