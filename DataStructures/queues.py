@@ -1,58 +1,74 @@
-class Queues:
+# Circular Queues
 
-    def __init__(self, capacity):
-        self.capacity = capacity
+
+class Queue:
+    def __init__(self, size=4):
         self.head = 0
         self.tail = 0
-        self.queue = [None] * capacity
-        self.size = 0
+        self.size = size
+        self.queue = [None] * self.size
+        self.length = 0
 
     def enqueue(self, x):
-        if self.overflow():
-            print("over flow")
-            return "over flow"
-        self.queue[self.tail] = x
-        self.size = self.size + 1
-        self.tail = self.tail + 1
-
-        if self.tail == self.capacity:
-            self.tail = 0
+        if self.is_full():
+            raise QueueFullException
+        else:
+            self.queue[self.tail] = x
+            self.length += 1
+            self.tail += 1
+            if self.tail == self.size:
+                self.tail = 0
 
     def dequeue(self):
-        if self.underflow():
-            print("under flow")
-            return "under flow"
-        x = self.queue[self.head]
-        self.head = self.head + 1
-        self.size = self.size - 1
-        if self.head == self.capacity:
-            self.head = 0
-            pass
-        return x
+        if self.is_empty():
+            raise QueueEmptyException
+        else:
+            x = self.queue[self.head]
+            self.queue[self.head] = None
+            self.head += 1
+            self.length -= 1
+            if self.head == self.size:
+                self.head = 0
+            return x
 
-    def overflow(self):
-        return self.size == self.capacity
+    def is_full(self):
+        if self.length == self.size:
+            return True
 
-    def underflow(self):
-        return self.size == 0
+    def is_empty(self):
+        if self.length == 0:
+            return True
+
+    def len_queue(self):
+        return self.length
 
 
-q = Queues(4)
+class QueueFullException(Exception):
+    pass
+
+
+class QueueEmptyException(Exception):
+    pass
+
+
+q = Queue()
 q.enqueue(1)
+print(q.length, q.queue)
 q.enqueue(2)
+print(q.length, q.queue)
 q.enqueue(3)
+print(q.length, q.queue)
 q.enqueue(4)
-q.enqueue(5)
-print(q.tail, q.head)
-print(q.queue)
+print(q.length, q.queue)
+try:
+    q.enqueue(5)
+    print(q.length, q.queue)
+except QueueFullException:
+    print("Q full")
+    pass
 
 print(q.dequeue())
 q.enqueue(5)
-print(q.queue)
-print(q.dequeue())
-print(q.dequeue())
-print(q.dequeue())
-print(q.dequeue())
-q.dequeue()
-
+print(q.length, q.queue)
+print(q.dequeue(), q.queue, q.length)
 
