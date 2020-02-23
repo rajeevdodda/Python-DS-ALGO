@@ -39,10 +39,6 @@ class Stack:
         return self.top + 1
 
 
-class StackFullException(Exception):
-    pass
-
-
 class StackEmptyException(Exception):
     pass
 
