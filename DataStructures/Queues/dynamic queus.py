@@ -44,9 +44,9 @@ class Queue:
         self._queue_length = capacity
 
 
-
 class QueueEmptyException(Exception):
     pass
+
 
 q = Queue()
 
