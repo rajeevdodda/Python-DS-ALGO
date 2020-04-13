@@ -1,13 +1,16 @@
-class LinkedQueue:
+class Empty(Exception):
+    pass
+
+
+class CircularQueue:
     class _Node:
         __slots__ = '_element', '_next'
 
         def __init__(self, element, next):
-            self._next = next
             self._element = element
+            self._next = next
 
     def __init__(self):
-        self._head = None
         self._tail = None
         self._size = 0
 
@@ -20,39 +23,38 @@ class LinkedQueue:
     def first(self):
         if self.is_empty():
             raise Empty
-        return self._head._element
+        head = self._tail._next
+        return head._element
 
     def enqueue(self, element):
         new_node = self._Node(element, None)
         if self.is_empty():
-            self._head = new_node
-            self._tail = new_node
+            new_node._next = new_node
         else:
+            new_node._next = self._tail._next
             self._tail._next = new_node
-            self._tail = new_node
+        self._tail = new_node
         self._size += 1
 
     def dequeue(self):
         if self.is_empty():
             raise Empty
+        old_head = self._tail._next
+        if self._size == 1:
+            self._tail = None
         else:
-            result = self._head._element
-            self._head = self._head._next
-            self._size -= 1
-            if self.is_empty():
-                self._tail = None
-            return result
+            self._tail._next = old_head._next
+        self._size -= 1
+        return old_head._element
+
+    def rotate(self):
+        if self._size > 0:
+            self._tail = self._tail._next
 
 
-class Empty(Exception):
-    pass
-
-
-q = LinkedQueue()
-q.enqueue(1)
-q.enqueue(5)
-q.enqueue(3)
-print(q.dequeue())
-print(q.dequeue())
-print(q.dequeue())
-print(len(q))
+c = CircularQueue()
+c.enqueue(1)
+c.enqueue(2)
+print(c.first())
+print(c.dequeue())
+print(c.first())

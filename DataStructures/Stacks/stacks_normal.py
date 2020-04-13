@@ -6,6 +6,9 @@ class Stack:
         self.top = -1
         self.size = size
 
+    def __len__(self):
+        return self.top + 1
+
     def is_empty(self):
         return self.top == -1
 
@@ -44,12 +47,3 @@ class StackEmptyException(Exception):
 
 
 # POP PUSH PEEK ech of the three stack operations takes O(1).
-
-
-s = Stack(4)
-s.push(1)
-s.push(1)
-s.push(1)
-s.push(1)
-s.pop()
-print(s.stack_size())

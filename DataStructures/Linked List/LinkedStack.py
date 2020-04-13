@@ -37,6 +37,7 @@ class LinkedStack:
 class Empty(Exception):
     pass
 
+
 l = LinkedStack()
 l.push(5)
 l.push(10)
