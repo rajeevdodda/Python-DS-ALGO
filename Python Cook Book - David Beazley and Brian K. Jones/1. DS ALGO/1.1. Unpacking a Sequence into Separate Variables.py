@@ -20,3 +20,6 @@ except ValueError as e:
 s = "hello"
 a, b, c, *d = s
 print(a, b, c, d)
+
+a, b = range(2)
+print(a, b)

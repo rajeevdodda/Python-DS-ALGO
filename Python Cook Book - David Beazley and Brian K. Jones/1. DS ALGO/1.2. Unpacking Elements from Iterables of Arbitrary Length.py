@@ -9,8 +9,10 @@ name1, email1, *phone_numbers = record2
 # *phone_numbers returns empty list i.e., None
 print(phone_numbers)
 
-# The starred variable can also be the first one in the list.
+# The starred variable can also be the first one in the list. * return list type
+
 *s, t = "hello"
+print(type(s))
 print(s, t)
 
 # s becomes empty list
