@@ -1,8 +1,8 @@
+# Example 1-1. A deck as a sequence of cards
 import collections
 from random import choice
 
-
-Card = collections.namedtuple('Card', ['rank', 'suit'])
+Card = collections.namedtuple('CardsDeck', ['rank', 'suit'])
 
 
 class FrenchDeck:
@@ -18,25 +18,34 @@ class FrenchDeck:
         return len(self._cards)
 
     def __getitem__(self, position):
+        print("in __getitem")
         return self._cards[position]
 
+    def __contains__(self, item):
+        if item in self._cards:
+            return True
+        else:
+            return False
 
-beer_card = Card("A", "diamonds")
+
+beer_card = Card("2", "spades")
 print(beer_card)
-
 
 deck = FrenchDeck()
 print(len(deck))
 
 # This works only if class has __getitem__ method
-print(choice(deck))
+# print(choice(deck))
 
 # __getitem__ delegates to the [] operator of self._cards, our deck automatically supports slicing.
-print(deck[1:10])
+# print(deck[1:10])
 
 # Just by implementing the __getitem__ special method, our deck is also iterable
-for card in deck:
-    print(card)
+# for card in deck:
+#     print(card)
 
-for card in reversed(deck):
-    print(card)
+# for card in reversed(deck):
+#     print(card)
+
+if beer_card in deck:
+    print("yes")
